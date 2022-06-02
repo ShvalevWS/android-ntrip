@@ -102,13 +102,14 @@ class MyBL(BoxLayout):
         s.send(header.encode('ascii') + string.encode('ascii'))
         time.sleep(2)
         data = s.recv(2048)
-        print(data)
         self.set_data_label(data=data)
-        print(header)
         return data
 
     def set_data_label(self, data):
-        self.resp_body = str(data)
+        if "HTTP/1.1 200 OK" in str(data):
+            self.resp_body = "HTTP/1.1 200 OK"
+        else:
+            self.resp_body = "Something went wrong :("
 
 
 class MyApp(App):
