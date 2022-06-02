@@ -36,7 +36,7 @@ version = 0.3
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3,kivy==2.0.0
+requirements = python3,kivy==master,kivymd,android.permissions
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
@@ -88,7 +88,7 @@ fullscreen = 0
 #android.presplash_lottie = "path/to/lottie/file.json"
 
 # (list) Permissions
-#android.permissions = INTERNET
+android.permissions = INTERNET,ACCESS_NETWORK_STATE,ACCESS_WIFI_STATE,READ_EXTERNAL_STORAGE,WRITE_EXTERNAL_STORAGE,ACCEPT_HANDOVER,ACCESS_BACKGROUND_LOCATION,ACCESS_BLOBS_ACROSS_USERS,ACCESS_CHECKIN_PROPERTIES,ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION,ACCESS_MEDIA_LOCATION,ACCESS_NOTIFICATION_POLICY,ACCESS_WIFI_STATE,ACCOUNT_MANAGER,ACTIVITY_RECOGNITION,ADD_VOICEMAIL,ANSWER_PHONE_CALLS,BATTERY_STATS,BIND_ACCESSIBILITY_SERVICE,BIND_APPWIDGET,BIND_AUTOFILL_SERVICE,BIND_CALL_REDIRECTION_SERVICE,BLUETOOTH,BLUETOOTH_ADMIN_BLUETOOTH_ADVERTISE,BLUETOOTH_CONNECT,BLUETOOTH_PRIVILEGED,BLUETOOTH_SCAN,
 
 # (list) features (adds uses-feature -tags to manifest)
 #android.features = android.hardware.usb.host
@@ -217,7 +217,7 @@ fullscreen = 0
 #android.uses_library =
 
 # (str) Android logcat filters to use
-#android.logcat_filters = *:S python:D
+android.logcat_filters = *:S python:D
 
 # (str) Android additional adb arguments
 #android.adb_args = -H host.docker.internal
