@@ -43,27 +43,13 @@ class NtripScreen(Screen):
 
 
 class BluetoothScreen(Screen):
-    def get_socket_stream(self, name):
-        BluetoothAdapter = autoclass('android.bluetooth.BluetoothAdapter')
-        BluetoothDevice = autoclass('android.bluetooth.BluetoothDevice')
-        BluetoothSocket = autoclass('android.bluetooth.BluetoothSocket')
-        UUID = autoclass('java.util.UUID')
-        paired_devices = BluetoothAdapter.getDefaultAdapter().getBondedDevices().toArray()
-        socket = None
-        for device in paired_devices:
-            if device.getName() == name:
-                socket = device.createRfcommSocketToServiceRecord(
-                    UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"))
-                self.recv_stream = socket.getInputStream()
-                self.send_stream = socket.getOutputStream()
-                break
-        socket.connect()
-        return recv_stream, send_stream
-    def get(self):
-        self.recv_stream, self.send_stream = self.get_socket_stream('linvor')
-    def send(self, cmd):
-        self.send_stream.write('{}\n'.format(cmd))
-        self.send_stream.flush()
+    devs_list = []
+    async def dummy(self):
+        devices = await discover()
+        for d in devices:
+            self.devs_list.append(d)
+        print(self.devs_list)
+
 
 
 buildKV = Builder.load_file('app.kv')
