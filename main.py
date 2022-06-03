@@ -1,15 +1,8 @@
-from kivy.app import App
-from kivy.lang import Builder
-from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.textinput import TextInput
-from kivy.properties import StringProperty
-import time, base64, socket
-import variables
-
-KV = variables.KV
+#!/usr/bin/kivy
+from variables import *
 
 
-class MyBL(BoxLayout):
+class NtripScreen(Screen):
     mount_label = StringProperty("Mountpoint")
     server_label = StringProperty("Host")
     port_label = StringProperty("Port")
@@ -49,14 +42,42 @@ class MyBL(BoxLayout):
             self.resp_body = "Something went wrong :("
 
 
+class BluetoothScreen(Screen):
+    def get_socket_stream(self, name):
+        BluetoothAdapter = autoclass('android.bluetooth.BluetoothAdapter')
+        BluetoothDevice = autoclass('android.bluetooth.BluetoothDevice')
+        BluetoothSocket = autoclass('android.bluetooth.BluetoothSocket')
+        UUID = autoclass('java.util.UUID')
+        paired_devices = BluetoothAdapter.getDefaultAdapter().getBondedDevices().toArray()
+        socket = None
+        for device in paired_devices:
+            if device.getName() == name:
+                socket = device.createRfcommSocketToServiceRecord(
+                    UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"))
+                self.recv_stream = socket.getInputStream()
+                self.send_stream = socket.getOutputStream()
+                break
+        socket.connect()
+        return recv_stream, send_stream
+    def get(self):
+        self.recv_stream, self.send_stream = self.get_socket_stream('linvor')
+    def send(self, cmd):
+        self.send_stream.write('{}\n'.format(cmd))
+        self.send_stream.flush()
+
+
+buildKV = Builder.load_file('app.kv')
+
+
 class MyApp(App):
     running = True
 
     def build(self):
-        return Builder.load_string(KV)
+        return buildKV
 
     def stop(self):
         self.running = False
 
 
-MyApp().run()
+if __name__ == "__main__":
+    MyApp().run()
