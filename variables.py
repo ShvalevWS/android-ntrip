@@ -7,6 +7,4 @@ from kivy.properties import StringProperty
 import time, base64, socket
 from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition
 from kivy.properties import ObjectProperty
-import asyncio
-from bleak import discover
-
+from bluetooth.ble import DiscoveryService

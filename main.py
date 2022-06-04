@@ -43,12 +43,12 @@ class NtripScreen(Screen):
 
 
 class BluetoothScreen(Screen):
-    devs_list = []
-    async def dummy(self):
-        devices = await discover()
-        for d in devices:
-            self.devs_list.append(d)
-        print(self.devs_list)
+    def discover_devices(self):
+        service = DiscoveryService()
+        devices = service.discover(2)
+        for address, name in devices.items():
+            print("Name: {}, Address: {}".format(name, address))
+
 
 
 

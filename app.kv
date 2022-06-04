@@ -2,7 +2,6 @@
 #: import ScreenManager kivy.uix.screenmanager.ScreenManager
 #: import Screen kivy.uix.screenmanager.ScreenManager
 #: import FadeTransition kivy.uix.screenmanager.FadeTransition
-#: import asyncio asyncio
 
 ScreenManager:
     id: screen_manager
@@ -95,7 +94,7 @@ ScreenManager:
                 text: "GET DEVICES"
                 bold: True
                 background_color: '#00FFCE'
-                on_release: asyncio.run(root.dummy())
+                on_release: root.discover_devices()
             Button:
                 text: "SCREEN2"
                 bold: True
